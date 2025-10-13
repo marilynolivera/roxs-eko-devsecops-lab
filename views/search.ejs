@@ -1,0 +1,94 @@
+<% layout('content') %>
+
+<div style="margin-bottom: 30px;">
+    <h2 style="color: #1e293b; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center;">
+        <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 4px; height: 35px; margin-right: 15px; border-radius: 2px;"></span>
+        🔍 Resultados de Búsqueda
+    </h2>
+    <p style="color: #64748b; font-size: 16px; margin-left: 19px;">
+        Búsqueda: <strong style="color: #667eea;">"<%- in_query %>"</strong>
+    </p>
+</div>
+
+<% if (products.length == 0) { %>
+<div style="background: white; border-radius: 20px; padding: 80px 40px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+    <div style="font-size: 80px; margin-bottom: 20px;">🔍</div>
+    <h3 style="color: #1e293b; font-weight: 700; margin-bottom: 15px;">No se encontraron productos</h3>
+    <p style="color: #64748b; font-size: 18px; margin-bottom: 30px;">
+        No hay resultados para "<strong><%- in_query %></strong>". Intenta con otros términos de búsqueda.
+    </p>
+    <a href="/" class="btn btn-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; padding: 15px 40px; font-weight: 600; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; text-decoration: none; display: inline-block;">
+        🏪 Ver Todos los Productos
+    </a>
+</div>
+<% } else {%>
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px 30px; border-radius: 15px 15px 0 0; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div>
+            <h4 style="margin: 0; font-weight: 700; font-size: 20px;">📦 Productos Encontrados</h4>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 10px 25px; border-radius: 25px;">
+            <span style="font-size: 24px; font-weight: 700;"><%= products.length %></span>
+            <span style="font-size: 14px; opacity: 0.9; margin-left: 5px;">resultados</span>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive" style="border-radius: 0 0 15px 15px; margin-top: 0;">
+    <table class="table" style="margin-bottom: 0;">
+        <thead>
+        <tr>
+            <th style="padding: 20px 15px;">#</th>
+            <th style="padding: 20px 15px;">📦 Producto</th>
+            <th style="padding: 20px 15px;">📝 Descripción</th>
+            <th style="padding: 20px 15px;">💰 Precio</th>
+            <th style="padding: 20px 15px; text-align: center;">🔗 Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for( var i=0; i < products.length; i++)  {%>
+        <tr style="border-left: 4px solid transparent; transition: all 0.3s ease;">
+            <td style="padding: 20px 15px; font-family: 'Courier New', monospace; color: #667eea; font-weight: 600;">
+                #<%- i + 1 %>
+            </td>
+            <td style="padding: 20px 15px;">
+                <strong style="color: #1e293b; font-size: 15px;"><%- products[i].name %></strong>
+            </td>
+            <td style="padding: 20px 15px; color: #64748b; max-width: 400px;">
+                <%- products[i].description %>
+            </td>
+            <td style="padding: 20px 15px;">
+                <span style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; font-size: 16px;">
+                    $<%- products[i].price %>
+                </span>
+            </td>
+            <td style="padding: 20px 15px; text-align: center;">
+                <a href="/products/detail?id=<%- i + 1 %>" class="btn btn-sm" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; padding: 8px 20px; font-weight: 600; transition: all 0.3s ease; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                    Ver Detalles →
+                </a>
+            </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 30px; text-align: center;">
+    <a href="/" class="btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; padding: 12px 30px; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; text-decoration: none; display: inline-block;">
+        ← Volver al Catálogo
+    </a>
+</div>
+
+<style>
+.table tbody tr:hover {
+    border-left-color: #667eea !important;
+    background: #f8fafc !important;
+}
+.table tbody tr:hover .btn {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+}
+</style>
+
+<% } %>

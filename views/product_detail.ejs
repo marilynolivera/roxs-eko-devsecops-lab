@@ -1,0 +1,124 @@
+<% layout('content') %>
+
+<div class="row">
+    <div class="col-md-12">
+        <div style="margin-bottom: 30px;">
+            <a class="btn btn-danger" href="/" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; border-radius: 10px; padding: 12px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);">
+                ← Volver al Catálogo
+            </a>
+        </div>
+
+        <div class="thumbnail" style="border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);">
+            <div class="row" style="margin: 0;">
+                <div class="col-md-6" style="padding: 0;">
+                    <div style="position: relative; height: 500px; overflow: hidden; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                        <img class="img-responsive" src="/images/<%- product.image %>" alt="<%- product.name %>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 15px 25px; border-radius: 25px; font-weight: 700; font-size: 28px; box-shadow: 0 8px 25px rgba(79, 172, 254, 0.5);">
+                            $<%- product.price %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding: 50px;">
+                    <div class="caption-full">
+                        <div style="margin-bottom: 20px;">
+                            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 6px 15px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                                Producto Premium
+                            </span>
+                        </div>
+                        <h2 style="color: #1e293b; font-weight: 700; font-size: 32px; margin-bottom: 20px; line-height: 1.2;">
+                            <%-product.name%>
+                        </h2>
+                        <p style="color: #64748b; font-size: 18px; line-height: 1.8; margin-bottom: 30px;">
+                            <%-product.description%>
+                        </p>
+                        
+                        <div style="background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                            <h4 style="color: #1e293b; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center;">
+                                <span style="font-size: 24px; margin-right: 10px;">✨</span>
+                                Características del Producto
+                            </h4>
+                            <ul style="color: #64748b; line-height: 2; margin: 0; padding-left: 20px;">
+                                <li>Calidad premium garantizada</li>
+                                <li>Envío rápido y seguro</li>
+                                <li>Garantía de satisfacción</li>
+                                <li>Soporte 24/7</li>
+                            </ul>
+                        </div>
+
+                        <a id="buy_button" class="btn btn-success btn-lg btn-block" href="#" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border: none; border-radius: 12px; padding: 18px; font-weight: 700; font-size: 18px; box-shadow: 0 6px 20px rgba(79, 172, 254, 0.5); transition: all 0.3s ease;">
+                            🛒 Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+#buy_button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.7) !important;
+}
+</style>
+
+<div id="buy-screen" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">🛒 Confirmar Compra</h4>
+            </div>
+            <form id="buy-form" enctype="application/x-www-form-urlencoded">
+                <div class="modal-body">
+                    <div style="background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%); padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                        <h5 style="color: #1e293b; font-weight: 600; margin-bottom: 10px;">📦 Producto Seleccionado</h5>
+                        <p style="color: #64748b; margin: 0; font-size: 16px;"><strong><%- product.name %></strong> - $<%- product.price %></p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mail">📧 Correo Electrónico</label>
+                                <input type="email" class="form-control" name="mail" id="mail" placeholder="tu@email.com" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone">📱 Teléfono de Contacto</label>
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="+54 11 0000 0000" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">🏠 Dirección de Envío</label>
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Calle, número, ciudad, código postal" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ship_date">📅 Fecha de Envío Deseada</label>
+                        <input type="date" class="form-control" name="ship_date" id="ship_date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price">💰 Precio Total</label>
+                        <input type="text" class="form-control" name="price" id="price" value="$<%- product.price %>" readonly style="background: #f8fafc; font-weight: 700; color: #667eea; font-size: 18px;">
+                    </div>
+                    
+                    <input type="hidden" class="form-control" name="product_id" id="product_id" value="<%- product.id %>">
+                    <input type="hidden" class="form-control" name="product_name" id="product_name" value="<%- product.name %>">
+                </div>
+                <div class="modal-footer">
+                    <span id="error" class="label label-danger pull-left hidden"></span>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; border-radius: 10px; padding: 12px 25px; font-weight: 600;">
+                        ❌ Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border: none; border-radius: 10px; padding: 12px 30px; font-weight: 600;">
+                        ✅ Confirmar Compra <i class="glyphicon glyphicon-shopping-cart"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

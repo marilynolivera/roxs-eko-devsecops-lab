@@ -1,0 +1,413 @@
+openapi: 3.0.0
+info:
+  title: NodeVulnerable API - OWASP Lab
+  description: |
+    API de laboratorio vulnerable para pruebas de seguridad y análisis de código.
+    
+    ⚠️ **ADVERTENCIA**: Esta aplicación contiene vulnerabilidades intencionales del OWASP Top 10.
+    Solo debe usarse en entornos de prueba controlados con fines educativos.
+    
+    ## Vulnerabilidades Incluidas
+    - A01:2021 - Broken Access Control
+    - A02:2021 - Cryptographic Failures
+    - A03:2021 - Injection (SQL Injection)
+    - A07:2021 - Authentication Failures
+    - Y más...
+    
+  version: 1.0.1
+  contact:
+    name: RoxsRoss
+    url: https://github.com/roxsross
+  license:
+    name: MIT
+    
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desarrollo local
+    
+tags:
+  - name: System
+    description: Endpoints del sistema
+  - name: Authentication
+    description: Endpoints de autenticación
+  - name: Products
+    description: Gestión de productos
+  - name: Purchases
+    description: Gestión de compras
+  - name: Search
+    description: Búsqueda de productos
+
+paths:
+  /api/health:
+    get:
+      tags:
+        - System
+      summary: Health Check
+      description: Verifica el estado de la API
+      responses:
+        '200':
+          description: API funcionando correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  status:
+                    type: string
+                    example: healthy
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: 1.0.1
+
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Autenticar usuario (API REST)
+      description: |
+        Autentica un usuario con credenciales y devuelve JSON.
+        
+        ⚠️ **VULNERABLE**: Este endpoint es susceptible a SQL Injection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: admin
+                password:
+                  type: string
+                  example: admin
+      responses:
+        '200':
+          description: Autenticación exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Autenticación exitosa
+                  user:
+                    type: string
+                    example: admin
+        '400':
+          description: Credenciales incompletas
+        '401':
+          description: Credenciales inválidas
+          
+  /api/auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Cerrar sesión (API REST)
+      description: Cierra la sesión del usuario actual
+      responses:
+        '200':
+          description: Sesión cerrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Sesión cerrada exitosamente
+          
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Listar todos los productos (API REST)
+      description: Devuelve el catálogo completo de productos LEGO en formato JSON
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: integer
+                    example: 8
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '500':
+          description: Error del servidor
+                
+  /api/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Obtener producto por ID (API REST)
+      description: |
+        Devuelve los detalles de un producto específico
+        
+        ⚠️ **VULNERABLE**: Posible SQL Injection en el parámetro id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del producto
+          example: 1
+      responses:
+        '200':
+          description: Detalles del producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+          
+  /api/search:
+    get:
+      tags:
+        - Search
+      summary: Buscar productos (API REST)
+      description: |
+        Busca productos por nombre o descripción
+        
+        ⚠️ **VULNERABLE**: Posible XSS en los resultados de búsqueda
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Término de búsqueda
+          example: LEGO
+      responses:
+        '200':
+          description: Resultados de búsqueda
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  query:
+                    type: string
+                    example: LEGO
+                  count:
+                    type: integer
+                    example: 3
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '400':
+          description: Parámetro de búsqueda requerido
+          
+  /api/purchases:
+    post:
+      tags:
+        - Purchases
+      summary: Crear compra (API REST)
+      description: |
+        Realiza la compra de un producto
+        
+        ⚠️ **VULNERABLE**: Posible manipulación de precios
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - mail
+                - product_name
+                - product_id
+                - address
+                - phone
+                - ship_date
+                - price
+              properties:
+                mail:
+                  type: string
+                  format: email
+                  example: usuario@example.com
+                product_name:
+                  type: string
+                  example: LEGO Stormtrooper Classic
+                product_id:
+                  type: integer
+                  example: 1
+                address:
+                  type: string
+                  example: Av. Corrientes 1234, Buenos Aires
+                phone:
+                  type: string
+                  example: +54 11 1234 5678
+                ship_date:
+                  type: string
+                  format: date
+                  example: 2025-10-20
+                price:
+                  type: string
+                  example: $50
+      responses:
+        '200':
+          description: Compra exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: ¡Compra realizada con éxito!
+                  purchase:
+                    $ref: '#/components/schemas/Purchase'
+        '400':
+          description: Parámetros inválidos
+        '401':
+          description: No autenticado
+        '500':
+          description: Error al procesar la compra
+    get:
+      tags:
+        - Purchases
+      summary: Obtener compras del usuario (API REST)
+      description: |
+        Lista los productos comprados por el usuario actual
+        
+        ⚠️ **VULNERABLE**: Posible acceso no autorizado a compras de otros usuarios
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Lista de compras del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: integer
+                    example: 2
+                  purchases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Purchase'
+        '401':
+          description: No autenticado
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: LEGO Stormtrooper Classic
+        description:
+          type: string
+          example: Figura coleccionable de Stormtrooper de Star Wars
+        price:
+          type: integer
+          example: 50
+        image:
+          type: string
+          example: product_1.jpg
+          
+    Purchase:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        mail:
+          type: string
+          format: email
+          example: usuario@example.com
+        product_name:
+          type: string
+          example: LEGO Stormtrooper Classic
+        user_name:
+          type: string
+          example: admin
+        product_id:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: Av. Corrientes 1234, Buenos Aires
+        phone:
+          type: string
+          example: +54 11 1234 5678
+        ship_date:
+          type: string
+          format: date
+          example: 2025-10-20
+        price:
+          type: integer
+          example: 50
+        purchase_date:
+          type: string
+          format: date-time
+          example: 2025-10-13T20:30:00Z
+          
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          format: password
+          example: admin
+
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid
+      description: Autenticación basada en sesión de Express
