@@ -51,6 +51,12 @@ jobs:
             - name: Gitleak scan
               run: |
                     gitleaks detect --source . --verbose --report-path gitleaks-report.json --exit-code=0
+            
+            - name: Upload Gitleaks Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: gitleaks-report
+                  path: gitleaks-report.json
 
     security_sast:
         name: Security SAST
@@ -67,7 +73,14 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  python install bandit
+                  pip install bandit
             - name: Run Bandit
               run: |
                   bandit -r . -f json -o bandit-report.json || true
+
+
+            - name: Upload Bandit Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: bandit-report
+                  path: bandit-report.json
