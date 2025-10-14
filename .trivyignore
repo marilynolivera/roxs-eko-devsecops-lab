@@ -1,0 +1,16 @@
+# .trivyignore
+# Trivy ignore file for vulnerabilities that are known and accepted
+
+# Example: Ignore specific CVE
+# CVE-2023-1234
+
+# Example: Ignore vulnerabilities in test files
+# **/tests/**
+
+# Example: Ignore low severity vulnerabilities
+# severity:LOW
+
+# Example: Ignore specific packages
+# pkg:pypi/package-name
+
+# Add your specific ignores below this line

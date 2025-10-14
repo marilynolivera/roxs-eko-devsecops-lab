@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>http://devsecops.tanuki.host/notes</loc>
+   </url>
+   <url>
+      <loc>http://devsecops.tanuki.host/notes/add</loc>
+   </url>
+   <url>
+      <loc>http://devsecops.tanuki.host/notes/delete</loc>
+   </url>
+   <url>
+      <loc>http://devsecops.tanuki.host/notes/get</loc>
+   </url>
+</urlset> 

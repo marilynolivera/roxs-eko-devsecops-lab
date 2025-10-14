@@ -1,0 +1,27 @@
+# Bandit configuration file
+# Customize security checks for the Flask application
+
+[bandit]
+# Paths to exclude from scanning
+exclude_dirs = [".venv", "venv", "env", "__pycache__", ".git", "node_modules"]
+
+# Tests to skip (comma-separated list of test IDs)
+# B101: assert_used - Skip assert statements
+# B601: paramiko_calls - Skip if not using paramiko
+# skips = B101,B601
+
+# Tests to include (if you want to be specific)
+# tests = B101,B102,B103
+
+[formatters]
+# Available formatters: txt, json, csv, xml
+# Default is txt
+# format = json
+
+[severity]
+# Define severity levels: LOW, MEDIUM, HIGH
+# level = LOW
+
+[confidence]
+# Define confidence levels: LOW, MEDIUM, HIGH  
+# level = LOW
