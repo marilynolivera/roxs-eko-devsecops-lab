@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+  <body>
+
+    <!-- Hero Section with Corgi -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-md-start text-center mb-4 mb-md-0">
+              <h1 class="hero-title" style="font-size: 3rem; line-height: 1.2;">
+                🐾 Welcome to<br/>
+                <span style="color: #fff5e6;">Pet Clinic</span>
+              </h1>
+              <p class="hero-subtitle" style="font-size: 1.3rem; margin-bottom: 30px;">
+                Where Every Pet Gets the Love & Care They Deserve
+              </p>
+              <div style="display: flex; gap: 15px; justify-content: center; justify-content: md-start; flex-wrap: wrap;">
+                <a href="#" th:href="@{/owners/find}" class="btn btn-light btn-lg" 
+                   style="background: white; color: #e76f51; font-weight: 700; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                  <span class="fa fa-search"></span> Find Owners
+                </a>
+                <a href="#" th:href="@{/vets.html}" class="btn btn-outline-light btn-lg" 
+                   style="border: 3px solid white; color: white; font-weight: 700;">
+                  <span class="fa fa-user-md"></span> Our Vets
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <img class="img-fluid hero-image" 
+                   src="../static/resources/images/dog-4988985_1280.jpg" 
+                   th:src="@{/resources/images/dog-4988985_1280.jpg}"
+                   alt="Happy Corgi"
+                   style="max-width: 500px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); border: 8px solid white;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container features-section">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card page-enter">
+            <div class="feature-icon">
+              <span class="fa fa-search"></span>
+            </div>
+            <h3 class="feature-title">Find Owners</h3>
+            <p class="feature-description">
+              Quickly locate pet owners with our advanced search system. 
+              Track and manage owner information with precision.
+            </p>
+            <a href="#" th:href="@{/owners/find}" class="btn btn-primary mt-3">
+              <span class="fa fa-search"></span> Search Now
+            </a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-card page-enter" style="animation-delay: 0.1s;">
+            <div class="feature-icon">
+              <span class="fa fa-th-list"></span>
+            </div>
+            <h3 class="feature-title">Veterinarians</h3>
+            <p class="feature-description">
+              Access our elite team of veterinary professionals. 
+              View specialties and expertise of our medical staff.
+            </p>
+            <a href="#" th:href="@{/vets.html}" class="btn btn-success mt-3">
+              <span class="fa fa-th-list"></span> View Team
+            </a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-card page-enter" style="animation-delay: 0.2s;">
+            <div class="feature-icon">
+              <span class="fa fa-plus-circle"></span>
+            </div>
+            <h3 class="feature-title">Add New Owner</h3>
+            <p class="feature-description">
+              Register new pet owners in our secure database. 
+              Streamlined onboarding process for new clients.
+            </p>
+            <a href="#" th:href="@{/owners/new}" class="btn btn-primary mt-3">
+              <span class="fa fa-plus-circle"></span> Register
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Section -->
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <div class="feature-card text-center" style="background: linear-gradient(135deg, #8b6f47 0%, #f4a261 100%); color: white; padding: 50px 30px;">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 40px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+              🏆 Why Pet Owners Trust Us
+            </h2>
+            <div class="row">
+              <div class="col-md-3 col-6 mb-4">
+                <div style="font-size: 3.5rem; font-weight: 700; color: #fff5e6; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">1000+</div>
+                <div style="font-size: 1.2rem; opacity: 0.95; font-weight: 600;">Happy Pets</div>
+              </div>
+              <div class="col-md-3 col-6 mb-4">
+                <div style="font-size: 3.5rem; font-weight: 700; color: #2a9d8f; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">24/7</div>
+                <div style="font-size: 1.2rem; opacity: 0.95; font-weight: 600;">Emergency Care</div>
+              </div>
+              <div class="col-md-3 col-6 mb-4">
+                <div style="font-size: 3.5rem; font-weight: 700; color: #fff5e6; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">15+</div>
+                <div style="font-size: 1.2rem; opacity: 0.95; font-weight: 600;">Years Experience</div>
+              </div>
+              <div class="col-md-3 col-6 mb-4">
+                <div style="font-size: 3.5rem; font-weight: 700; color: #2a9d8f; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">100%</div>
+                <div style="font-size: 1.2rem; opacity: 0.95; font-weight: 600;">Satisfaction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Original Pets Image -->
+      <div class="row mt-5">
+        <div class="col-md-12 text-center">
+          <img class="img-fluid" 
+               style="max-width: 800px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);"
+               src="../static/resources/images/pets.png" 
+               th:src="@{/resources/images/pets.png}"
+               alt="Our Pets"/>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+</html>

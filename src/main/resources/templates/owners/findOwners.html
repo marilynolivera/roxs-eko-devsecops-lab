@@ -1,0 +1,67 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card page-enter" style="margin-top: 30px;">
+          <div class="card-header">
+            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+              <span class="fa fa-search"></span>
+              Find Owners
+            </h2>
+          </div>
+          <div class="card-body" style="padding: 40px;">
+            <p style="color: #6c757d; margin-bottom: 30px; font-size: 1.1rem;">
+              🔍 Search for pet owners in our secure database. Enter the last name to begin your search.
+            </p>
+
+            <form th:object="${owner}" th:action="@{/owners}" method="get"
+              class="form-horizontal" id="search-owner-form">
+              <div class="form-group">
+                <div class="control-group" id="lastNameGroup">
+                  <label class="control-label" style="font-size: 1.1rem; margin-bottom: 15px;">
+                    📋 Last Name
+                  </label>
+                  <div>
+                    <input class="form-control" th:field="*{lastName}" size="30"
+                      maxlength="80" placeholder="Enter owner's last name..." 
+                      style="font-size: 1.1rem;" />
+                    <span class="help-inline">
+                      <div th:if="${#fields.hasAnyErrors()}" style="margin-top: 10px;">
+                        <p th:each="err : ${#fields.allErrors()}" th:text="${err}" 
+                           style="color: #e94560; font-weight: 600;">Error</p>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group" style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; min-width: 200px;">
+                  <span class="fa fa-search"></span> Find Owner
+                </button>
+                <a class="btn btn-success" th:href="@{/owners/new}" style="flex: 1; min-width: 200px;">
+                  <span class="fa fa-plus-circle"></span> Add New Owner
+                </a>
+              </div>
+            </form>
+
+            <div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, rgba(244, 162, 97, 0.1) 0%, rgba(42, 157, 143, 0.1) 100%); border-radius: 15px; border-left: 4px solid #e76f51;">
+              <h5 style="color: #8b6f47; margin-bottom: 10px;">💡 Search Tips</h5>
+              <ul style="color: #6c757d; margin: 0; padding-left: 20px;">
+                <li>Leave the field empty to see all owners</li>
+                <li>Use partial names for broader results</li>
+                <li>Search is case-insensitive</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
