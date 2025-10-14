@@ -4,9 +4,13 @@ on:
     push:
         branches:
             - eko-demo-python
+            - develop
+            - staging
     pull_request:
         branches:
             - eko-demo-python
+            - master
+            - main
     workflow_dispatch:
 
 #jobs
