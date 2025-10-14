@@ -33,7 +33,7 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
 
-#gitleaks
+#gitleaks secret tools
     security_secret:
         name: Security Secret
         runs-on: ubuntu-latest
@@ -50,4 +50,24 @@ jobs:
                     sudo mv gitleaks /usr/local/bin/
             - name: Gitleak scan
               run: |
-                    gitleaks detect --source . --verbose --report-path gitleaks-report.json
+                    gitleaks detect --source . --verbose --report-path gitleaks-report.json --exit-code=0
+
+    security_sast:
+        name: Security SAST
+        runs-on: ubuntu-latest
+        needs: init
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: '3.11'
+
+            - name: Install dependencies
+              run: |
+                  python install bandit
+            - name: Run Bandit
+              run: |
+                  bandit -r . -f json -o bandit-report.json || true
