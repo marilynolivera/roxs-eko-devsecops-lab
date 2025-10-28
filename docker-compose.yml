@@ -1,8 +1,9 @@
 services:
   notes-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: roxsroxs12/simple-notes-app:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     container_name: simply-simple-notes
     restart: unless-stopped
     ports:
