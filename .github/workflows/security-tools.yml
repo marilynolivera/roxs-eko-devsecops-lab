@@ -126,13 +126,25 @@ jobs:
 
             - name: Upload pip-audit Report
               uses: actions/upload-artifact@v4
-              
+              with:
+                  name: pip-audit-report
+                  path: pip-audit-report.json
+    #######
     test:
         name: test ssh
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+            - name: Copy changed files to server
+              uses: appleboy/scp-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.KEY }}
+                port: ${{ secrets.PORT }}
+                source: docker-compose.yml
+                target: ec2-user
             - name: Execute remote SSH commands using SSH key
               uses: appleboy/ssh-action@v1
               with:
@@ -140,4 +152,4 @@ jobs:
                 username: ${{ secrets.USERNAME }}
                 key: ${{ secrets.KEY }}
                 port: ${{ secrets.PORT }}
-                script: whoami
+                script: ls -lrt
