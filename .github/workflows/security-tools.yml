@@ -155,7 +155,7 @@ jobs:
             tags: roxsross12/simple-notes-app:latest
 
     trivy_scan:
-      needs: [build_docker]
+      needs: [init, security_secret, security_sast_semgrep, security_sca_py-audit]
       name: trivy container scan
       runs-on: ubuntu-24.04
       permissions:
