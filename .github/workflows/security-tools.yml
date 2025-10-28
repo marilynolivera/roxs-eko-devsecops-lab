@@ -223,7 +223,7 @@ jobs:
       steps:         
       - name: ZAP Scan
         run: |
-          docker run --rm -v ${{ github.workspace }}:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+          docker run -u root --rm -v ${{ github.workspace }}:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
               -t https://petstore.swagger.io/ -J testreport.json -r testreport.html
           ls -la
         continue-on-error: true
