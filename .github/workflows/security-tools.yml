@@ -224,8 +224,7 @@ jobs:
       - name: ZAP Scan
         run: |
           docker run -u root --rm -v ${{ github.workspace }}:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-api-scan.py \
-              -t https://petstore.swagger.io/ -f openapi-J testreport.json -r testreport.html
-          ls -la
+              -t https://petstore.swagger.io/ -f openapi -J testreport.json -r testreport.html
         continue-on-error: true
       - name: Upload ZAP Report HTML
         uses: actions/upload-artifact@v4
