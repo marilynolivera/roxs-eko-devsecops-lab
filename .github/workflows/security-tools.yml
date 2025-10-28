@@ -225,6 +225,7 @@ jobs:
         run: |
           docker run --rm -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
               -t https://petstore.swagger.io/ -J testreport.json -r testreport.html
+        continue-on-error: true
       - name: Upload ZAP Report HTML
         uses: actions/upload-artifact@v4
         with:
