@@ -187,3 +187,32 @@ jobs:
           with:
             name: trivy-results
             path: trivy-results.sarif
+
+    deploy:
+      needs: [build_docker, trivy_scan]
+      name: Deploy to production
+      runs-on: ubuntu-24.04
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4            
+        - name: Copy changed files to server
+          uses: appleboy/scp-action@v1
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            source: ./docker-compose.yml
+            target: /home/ec2-user/app
+        - name: Multiple commands
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            script: |
+              whoami
+              ls -al
+              cd /home/ec2-user/app
+              docker compose up -d
