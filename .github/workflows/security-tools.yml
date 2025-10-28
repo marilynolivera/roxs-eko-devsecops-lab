@@ -216,3 +216,13 @@ jobs:
               ls -al
               cd /home/ec2-user/app
               docker compose up -d
+
+    security_dast:
+      needs: [deploy]
+      name: security dast scan
+      runs-on: ubuntu-24.04
+      steps:         
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: 'http://34.212.176.135:8080'

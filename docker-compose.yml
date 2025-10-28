@@ -1,6 +1,6 @@
 services:
   notes-app:
-    image: roxsroxs12/simple-notes-app:latest
+    image: roxsross12/simple-notes-app:latest
     # build:
     #   context: .
     #   dockerfile: Dockerfile
