@@ -130,6 +130,12 @@ jobs:
   trivy_scan:
     name: trivy container scan
     runs-on: ubuntu-24.04
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
