@@ -1,4 +1,4 @@
-FROM python:3.13-alpine
+FROM python:alpine3.10
 
 RUN apk update
 RUN apk add --no-cache gcc musl-dev sqlite-dev
